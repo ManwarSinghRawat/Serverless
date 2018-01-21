@@ -10,7 +10,16 @@ module.exports.login = (event, context, callback) => {
 			  })
 	 }
  
- 
+  if(event.httpMethod == 'POST' && event.body){
+	  let json = JSON.parse(event.body);
+	  return callback(null,{
+		    statusCode: 200,
+		    body: JSON.stringify({
+		      message: 'Hi I got Json Object from you',
+		      object: json
+		    }),
+		  })
+  }
 
     
  
