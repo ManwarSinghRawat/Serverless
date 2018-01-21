@@ -1,24 +1,34 @@
 'use strict';
 
 module.exports.login = (event, context, callback) => {
- if(event.queryStringParameters && event.queryStringParameters.name){
-	 return callback(null,{
-			    statusCode: 200,
-			    body: JSON.stringify({
-			      message: 'Hello '+ event.queryStringParameters.name
-			    }),
-			  })
-	 }
- 
+
   if(event.httpMethod == 'POST' && event.body){
 	  let json = JSON.parse(event.body);
-	  return callback(null,{
-		    statusCode: 200,
-		    body: JSON.stringify({
-		      message: 'Hi I got Json Object from you',
-		      object: json
-		    }),
-		  })
+	  let name = json.userName;
+	  console.log('name '+name);
+	 let password = json.password;
+	  if(name == 'Manwar' && password =='password'){
+		  
+		  
+		  var responseBody = {
+				  validate: true,
+				  message: 'Login Successful'
+			    };
+		  return callback(null,{
+			    statusCode: 200,
+			    body: JSON.stringify(responseBody),
+			  })	  
+	  }else
+		  {
+		  var responseBody = {
+				  validate: false,
+				  message: 'Login falure'
+			    };
+		  return callback(null,{
+			    statusCode: 400,
+			    body: JSON.stringify(responseBody),
+			  })	
+		  }
   }
 
     
